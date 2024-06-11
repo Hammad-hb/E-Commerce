@@ -3,21 +3,36 @@ import { API_BASE_URL } from '@/config/serverApiConfig';
 
 import errorHandler from './errorHandler';
 import successHandler from './successHandler';
+import { json } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const request = {
   create: async ({ entity, jsonData }) => {
+    console.log(typeof test);
     console.log('entity', entity);
     console.log('jsonData', jsonData);
     if (entity === 'product') {
       jsonData.parentCategory = jsonData.References['firstSelectedOption']._id;
       jsonData.productCategory = jsonData.References['secondSelectedOption']._id;
     }
+
+    if (jsonData.country === undefined) {
+    }
+
+    if (jsonData.country === undefined) {
+      jsonData.country = jsonData.apiCountry;
+      jsonData.city = jsonData.apiCity;
+      jsonData.state = jsonData.apiState;
+      jsonData.address = jsonData.apiAddress;
+    }
+
     try {
       console.log(entity + '&', jsonData);
-      const response = await axios.post(entity + '/create', jsonData);
+      // const response = await axios.post(entity + '/create', jsonData);
       console.log(response.data);
       successHandler(response, {
         notifyOnSuccess: true,

@@ -98,12 +98,15 @@ const schema = new mongoose.Schema({
   },
   address: {
     type: String,
+    trim: true,
   },
   city: {
     type: String,
+    trim: true,
   },
   State: {
     type: String,
+    trim: true,
   },
   postalCode: {
     type: Number,

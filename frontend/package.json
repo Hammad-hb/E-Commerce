@@ -9,6 +9,8 @@
   "dependencies": {
     "@ant-design/icons": "^5.3.0",
     "@ant-design/pro-layout": "^7.17.19",
+    "@geoapify/geocoder-autocomplete": "^2.0.1",
+    "@geoapify/react-geocoder-autocomplete": "^2.0.0",
     "@reduxjs/toolkit": "^2.2.1",
     "@vitejs/plugin-react": "^4.2.1",
     "antd": "^5.14.1",

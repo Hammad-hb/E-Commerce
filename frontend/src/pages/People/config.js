@@ -8,7 +8,6 @@ export const fields = {
   },
   middlename: {
     type: 'string',
-    validator: validateInputLength,
   },
   lastname: {
     type: 'string',

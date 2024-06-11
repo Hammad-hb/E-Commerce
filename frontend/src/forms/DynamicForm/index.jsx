@@ -9,11 +9,14 @@ import SelectAsync from '@/components/SelectAsync';
 import MultiStepSelectAsync from '@/components/MultiStepSelectAsync';
 import { generate as uniqueId } from 'shortid';
 
+import NewAddressComponent from '@/components/NewAddressComponent/NewAddressComponent';
+
 import { countryList } from '@/utils/countryList';
 import { selectLangDirection } from '@/redux/translate/selectors';
 import { useSelector } from 'react-redux';
 
 export default function DynamicForm({ fields, isUpdateForm = false }) {
+  console.log(fields);
   const [feedback, setFeedback] = useState();
   const langDirection = useSelector(selectLangDirection);
 
@@ -234,7 +237,8 @@ function FormElement({ field, feedback, setFeedback }) {
         },
       ]}
     >
-      <Select
+      <NewAddressComponent field={field} />
+      {/* <Select
         showSearch
         defaultValue={field.defaultValue}
         optionFilterProp="children"
@@ -258,10 +262,9 @@ function FormElement({ field, feedback, setFeedback }) {
             {translate(language.label)}
           </Select.Option>
         ))}
-      </Select>
+      </Select> */}
     </Form.Item>
   );
-
   const SearchComponent = () => {
     return (
       <Form.Item
@@ -286,7 +289,6 @@ function FormElement({ field, feedback, setFeedback }) {
       </Form.Item>
     );
   };
-
   const formItemComponent = {
     select: <SelectComponent />,
     selectWithTranslation: <SelectWithTranslationComponent />,

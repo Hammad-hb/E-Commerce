@@ -1,5 +1,14 @@
 import * as actionTypes from './types';
 
+// for making the new address component work
+const UPDATE_PLACE = 'UPDATE_NAME';
+export const updatePlace = (place) => {
+  return {
+    type: UPDATE_PLACE,
+    payload: place,
+  };
+};
+
 const INITIAL_KEY_STATE = {
   result: null,
   current: null,
@@ -29,11 +38,17 @@ const INITIAL_STATE = {
   delete: INITIAL_KEY_STATE,
   read: INITIAL_KEY_STATE,
   search: { ...INITIAL_KEY_STATE, result: [] },
+  place: '',
 };
 
 const crudReducer = (state = INITIAL_STATE, action) => {
   const { payload, keyState } = action;
   switch (action.type) {
+    case UPDATE_PLACE:
+      return {
+        ...state,
+        name: action.payload,
+      };
     case actionTypes.RESET_STATE:
       return INITIAL_STATE;
     case actionTypes.CURRENT_ITEM:
