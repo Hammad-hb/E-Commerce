@@ -15,6 +15,10 @@ const schema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  middlename: {
+    type: String,
+    trim: true,
+  },
   lastname: {
     type: String,
     trim: true,

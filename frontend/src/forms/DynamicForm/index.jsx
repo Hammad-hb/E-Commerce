@@ -6,6 +6,7 @@ import useLanguage from '@/locale/useLanguage';
 import { useMoney, useDate } from '@/settings';
 import AutoCompleteAsync from '@/components/AutoCompleteAsync';
 import SelectAsync from '@/components/SelectAsync';
+import MultiStepSelectAsync from '@/components/MultiStepSelectAsync';
 import { generate as uniqueId } from 'shortid';
 
 import { countryList } from '@/utils/countryList';
@@ -22,6 +23,7 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
         let field = fields[key];
 
         if ((isUpdateForm && !field.disableForUpdate) || !field.disableForForm) {
+          // console.log(key);
           field.name = key;
           if (!field.label) field.label = key;
           if (field.hasFeedback)
@@ -40,13 +42,15 @@ export default function DynamicForm({ fields, isUpdateForm = false }) {
 }
 
 function FormElement({ field, feedback, setFeedback }) {
+  const [multiStepSelectValue, setMultiStepSelectValue] = useState({});
+
   const translate = useLanguage();
   const money = useMoney();
   const { dateFormat } = useDate();
 
   const { TextArea } = Input;
 
-  const SelectComponent = () => (
+  const SelectComponent = () => {
     <Form.Item
       label={translate(field.label)}
       name={field.name}
@@ -72,8 +76,8 @@ function FormElement({ field, feedback, setFeedback }) {
           );
         })}
       </Select>
-    </Form.Item>
-  );
+    </Form.Item>;
+  };
 
   const SelectWithTranslationComponent = () => (
     <Form.Item
@@ -166,7 +170,7 @@ function FormElement({ field, feedback, setFeedback }) {
       </Select>
     </Form.Item>
   );
-  const TagComponent = () => (
+  const TagComponent = () => {
     <Form.Item
       label={translate(field.label)}
       name={field.name}
@@ -191,8 +195,8 @@ function FormElement({ field, feedback, setFeedback }) {
           </Select.Option>
         ))}
       </Select>
-    </Form.Item>
-  );
+    </Form.Item>;
+  };
   const ArrayComponent = () => (
     <Form.Item
       label={translate(field.label)}
@@ -331,6 +335,22 @@ function FormElement({ field, feedback, setFeedback }) {
         redirectLabel={field.redirectLabel}
       ></SelectAsync>
     ),
+    multiStepSelectAsync: (
+      <MultiStepSelectAsync
+        entityName={field.entityName}
+        subEntityName={field.subEntityName}
+        firstSelectValueKey={field.firstSelectValueKey}
+        firstSelectLabelKey={field.firstSelectLabelKey}
+        secondSelectLabelKey={field.secondSelectLabelKey}
+        secondSelectValueKey={field.secondSelectValueKey}
+        firstSelectIdKey={field.firstSelectIdKey}
+        secondSelectIdKey={field.secondSelectIdKey}
+        style={{ marginTop: 8, marginBottm: 8 }}
+        filterFieldName={field.filterFieldName}
+        value={multiStepSelectValue}
+        onChange={(value) => setMultiStepSelectValue(value)}
+      />
+    ),
 
     currency: (
       <InputNumber
@@ -369,18 +389,49 @@ function FormElement({ field, feedback, setFeedback }) {
     renderComponent = compunedComponent['string'];
   }
 
-  if (customFormItem) return <>{customFormItem}</>;
-  else {
+  // const validateMinMax = (_, value) => {
+  //   if (!value || value.length < 3 || value.length > 12) {
+  //     return Promise.reject(new Error('Min Max Error'));
+  //   }
+
+  //   return Promise.resolve();
+  // };
+
+  if (customFormItem) {
+    return <>{customFormItem}</>;
+  } else {
+    let rules = [
+      {
+        required: field.required || false,
+        type: filedType[field.type] ?? 'any',
+      },
+    ];
+
+    if (field.validator) {
+      rules.push({
+        validator: field.validator,
+      });
+    }
+
     return (
       <Form.Item
-        label={translate(field.label)}
+        label={translate(field.name)}
         name={field.name}
-        rules={[
-          {
-            required: field.required || false,
-            type: filedType[field.type] ?? 'any',
-          },
-        ]}
+        rules={rules}
+        // {[
+        //   {
+        //     required: field.required || false,
+        //     type: filedType[field.type] ?? 'any',
+        //   },
+        //   {
+        //     validator: field.validator,
+        //   },
+
+        // {
+        //   pattern: /^\d+$/, // Regular expression to match only integer numbers
+        //   message: 'Quantity must be an integer',
+        // },
+        // ]}
         valuePropName={field.type === 'boolean' ? 'checked' : 'value'}
       >
         {renderComponent}

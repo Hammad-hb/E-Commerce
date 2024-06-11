@@ -9,8 +9,16 @@ axios.defaults.withCredentials = true;
 
 const request = {
   create: async ({ entity, jsonData }) => {
+    console.log('entity', entity);
+    console.log('jsonData', jsonData);
+    if (entity === 'product') {
+      jsonData.parentCategory = jsonData.References['firstSelectedOption']._id;
+      jsonData.productCategory = jsonData.References['secondSelectedOption']._id;
+    }
     try {
+      console.log(entity + '&', jsonData);
       const response = await axios.post(entity + '/create', jsonData);
+      console.log(response.data);
       successHandler(response, {
         notifyOnSuccess: true,
         notifyOnFailed: true,
@@ -91,11 +99,12 @@ const request = {
   },
 
   filter: async ({ entity, options = {} }) => {
+    console.log('filter', options);
     try {
       let filter = options.filter ? 'filter=' + options.filter : '';
       let equal = options.equal ? '&equal=' + options.equal : '';
       let query = `?${filter}${equal}`;
-
+      console.log(entity + '/filter' + query);
       const response = await axios.get(entity + '/filter' + query);
       successHandler(response, {
         notifyOnSuccess: false,
@@ -114,6 +123,8 @@ const request = {
         query += key + '=' + options[key] + '&';
       }
       query = query.slice(0, -1);
+      // query = '?q=&fields=name';
+
       // headersInstance.cancelToken = source.token;
       const response = await axios.get(entity + '/search' + query);
 
@@ -136,6 +147,7 @@ const request = {
       query = query.slice(0, -1);
 
       const response = await axios.get(entity + '/list' + query);
+      console.log(response);
 
       successHandler(response, {
         notifyOnSuccess: false,

@@ -113,3 +113,12 @@ export const validatePhoneNumber = /^(?:[+\d()\-\s]+)$/;
 /*
  Set object value in html
 */
+
+// func for implementing input length validation
+export const validateInputLength = (_, value) => {
+  if (!value || value.length < 3 || value.length > 20) {
+    return Promise.reject(new Error('Enter a valid input length between 3 and 12 characters'));
+  }
+
+  return Promise.resolve();
+};

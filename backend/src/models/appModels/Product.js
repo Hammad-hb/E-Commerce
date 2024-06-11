@@ -10,6 +10,13 @@ const schema = new mongoose.Schema({
     default: true,
   },
 
+  parentCategory: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'ParentCategory',
+    required: true,
+    autopopulate: true,
+  },
+
   productCategory: {
     type: mongoose.Schema.ObjectId,
     ref: 'ProductCategory',

@@ -106,7 +106,7 @@ function FixHeaderPanel({ config }) {
   );
 }
 
-function CrudModule({ config, createForm, updateForm, withUpload = false }) {
+function CrudModule({ config, createForm, updateForm, withUpload = false, MultiStepSelectAsync }) {
   const dispatch = useDispatch();
 
   useLayoutEffect(() => {

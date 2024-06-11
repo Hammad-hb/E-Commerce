@@ -1,7 +1,6 @@
 import CrudModule from '@/modules/CrudModule/CrudModule';
 import DynamicForm from '@/forms/DynamicForm';
 import { fields } from './config';
-
 import useLanguage from '@/locale/useLanguage';
 
 export default function Product() {
@@ -35,5 +34,21 @@ export default function Product() {
       updateForm={<DynamicForm fields={fields} />}
       config={config}
     />
+
+    // const [multiStepSelectValue, setMultiStepSelectValue] = useState({});
+    // <MultiStepSelectAsync
+    //   entityName="parentcategory"
+    //   subEntityName="productcategory"
+    //   onChange={(value) => setMultiStepSelectValue(value)}
+    //   value={multiStepSelectValue}
+    //   firstSelectValueKey="name"
+    //   firstSelectLabelKey="name"
+    //   secondSelectLabelKey="name"
+    //   secondSelectValueKey="name"
+    //   firstSelectIdKey="name"
+    //   secondSelectIdKey="parentcategory"
+    //   style={{ marginTop: 8, marginBottm: 8 }}
+    //   filterFieldName="parentCategoryName"
+    // />
   );
 }

@@ -1,11 +1,19 @@
+import { validateInputLength } from '@/utils/helpers';
+
 export const fields = {
   firstname: {
     type: 'string',
     required: true,
+    validator: validateInputLength,
+  },
+  middlename: {
+    type: 'string',
+    validator: validateInputLength,
   },
   lastname: {
     type: 'string',
     required: true,
+    validator: validateInputLength,
   },
   company: {
     type: 'search',

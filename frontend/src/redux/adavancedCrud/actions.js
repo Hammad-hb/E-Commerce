@@ -213,6 +213,32 @@ export const erp = {
       }
     },
 
+  filter:
+    ({ entity, options }) =>
+    async (dispatch) => {
+      dispatch({
+        type: actionTypes.REQUEST_LOADING,
+        keyState: 'filter',
+        payload: null,
+      });
+
+      let data = await request.filter({ entity, options });
+
+      if (data.success === true) {
+        dispatch({
+          type: actionTypes.REQUEST_SUCCESS,
+          keyState: 'filter',
+          payload: data.result,
+        });
+      } else {
+        dispatch({
+          type: actionTypes.REQUEST_FAILED,
+          keyState: 'filter',
+          payload: null,
+        });
+      }
+    },
+
   search:
     ({ entity, options }) =>
     async (dispatch) => {

@@ -5,6 +5,14 @@ export const fields = {
     type: 'stringWithColor',
     required: true,
   },
+  parentCategory: {
+    type: 'async',
+    label: 'parent Category',
+    displayLabels: ['parentCategory', 'name'],
+    dataIndex: ['parentCategory', 'name'],
+    entity: 'parentCategory',
+    required: true,
+  },
   description: {
     type: 'textarea',
     required: true,

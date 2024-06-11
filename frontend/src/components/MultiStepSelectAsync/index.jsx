@@ -14,19 +14,20 @@ const asyncFilter = (entity, options) => {
 };
 
 const MultiStepSelectAsync = ({
-  firstSelectProps = {},
-  secondSelectProps = {},
-  firstSelectIdKey = '_id',
-  firstSelectValueKey = 'value',
-  firstSelectLabelKey = 'label',
-  secondSelectIdKey = '_id',
-  secondSelectValueKey = 'value',
-  secondSelectLabelKey = 'label',
-  entityName,
-  subEntityName = 'items',
-  value = {},
+  firstSelectProps = { placeholder: 'Parent Category' },
+  secondSelectProps = { placeholder: 'Product Category' },
+  entityName = 'parentcategory',
+  subEntityName = 'productcategory',
   onChange,
-  style,
+  value = {},
+  firstSelectValueKey = 'name',
+  firstSelectLabelKey = 'name',
+  secondSelectLabelKey = 'name',
+  secondSelectValueKey = 'name',
+  firstSelectIdKey = 'name',
+  secondSelectIdKey = 'parentcategory',
+  style = {},
+  filterFieldName = 'parentCategoryName',
 }) => {
   const firstSelectedOption = value.firstSelectedOption;
   const [firstSelectOptions, setFirstSelectOptions] = useState([]);
@@ -38,12 +39,11 @@ const MultiStepSelectAsync = ({
       setLoading(true);
       try {
         if (firstSelectedOption) {
-          const data = await asyncFilter(entityName, {
-            filter: '_id',
+          const data = await asyncFilter(subEntityName, {
+            filter: filterFieldName,
             equal: firstSelectedOption[firstSelectIdKey],
           });
-
-          setSecondSelectOptions(data?.result?.[0]?.[subEntityName]);
+          setSecondSelectOptions(data.result);
           return;
         }
         const data = await asyncList(entityName);
@@ -65,17 +65,16 @@ const MultiStepSelectAsync = ({
         {...firstSelectProps}
         loading={!firstSelectedOption ? loading : false}
         onChange={(value) => {
+          const selectedOption = firstSelectOptions.find(
+            (option) => option[firstSelectValueKey] === value
+          );
           if (onChange) {
-            onChange({
-              firstSelectedOption: firstSelectOptions.find(
-                (option) => option[firstSelectValueKey] === value
-              ),
-            });
+            onChange({ firstSelectedOption: selectedOption });
           }
         }}
       >
-        {firstSelectOptions.map((option) => (
-          <Option key={option[firstSelectIdKey]} value={option[firstSelectValueKey]}>
+        {firstSelectOptions.map((option, index) => (
+          <Option key={index} value={option[firstSelectValueKey]}>
             {option[firstSelectLabelKey]}
           </Option>
         ))}
@@ -87,18 +86,19 @@ const MultiStepSelectAsync = ({
           style={{ width: 200 }}
           {...secondSelectProps}
           onChange={(value) => {
+            const selectedOption = secondSelectOptions.find(
+              (option) => option[secondSelectValueKey] === value
+            );
             if (onChange) {
               onChange({
                 firstSelectedOption,
-                secondSelectedOption: secondSelectOptions.find(
-                  (option) => option[secondSelectValueKey] === value
-                ),
+                secondSelectedOption: selectedOption,
               });
             }
           }}
         >
-          {secondSelectOptions.map((option) => (
-            <Option key={option[secondSelectIdKey]} value={option[secondSelectValueKey]}>
+          {secondSelectOptions.map((option, index) => (
+            <Option key={index} value={option[secondSelectValueKey]}>
               {option[secondSelectLabelKey]}
             </Option>
           ))}

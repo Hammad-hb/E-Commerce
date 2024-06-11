@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
     required: true,
   },
   company: { type: mongoose.Schema.ObjectId, ref: 'Company', autopopulate: true },
-  people: { type: mongoose.Schema.ObjectId, ref: 'People', autopopulate: true },
+  people: { type: mongoose.Schema.ObjectId, ref: 'People' },
   convertedFrom: { type: mongoose.Schema.ObjectId, ref: 'Lead' },
   interestedIn: [{ type: mongoose.Schema.ObjectId, ref: 'Product' }],
   createdBy: { type: mongoose.Schema.ObjectId, ref: 'Admin' },
@@ -38,6 +38,6 @@ const schema = new mongoose.Schema({
   },
 });
 
-schema.plugin(require('mongoose-autopopulate'));
+// schema.plugin(require('mongoose-autopopulate'));
 
 module.exports = mongoose.model('Client', schema);

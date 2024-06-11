@@ -2,25 +2,22 @@ import CrudModule from '@/modules/CrudModule/CrudModule';
 import DynamicForm from '@/forms/DynamicForm';
 import { fields } from './config';
 
-
 import useLanguage from '@/locale/useLanguage';
 
-export default function People() {
-
-
+export default function ParentCategory() {
   const translate = useLanguage();
-  const entity = 'people';
+  const entity = 'parentcategory';
   const searchConfig = {
-    displayLabels: ['firstname', 'lastname'],
-    searchFields: 'firstname,lastname,email',
+    displayLabels: ['name'],
+    searchFields: 'name',
   };
-  const deleteModalLabels = ['firstname', 'lastname'];
+  const deleteModalLabels = ['name'];
 
   const Labels = {
-    PANEL_TITLE: translate('person'),
-    DATATABLE_TITLE: translate('people_list'),
-    ADD_NEW_ENTITY: translate('add_new_person'),
-    ENTITY_NAME: translate('person'),
+    PANEL_TITLE: translate('Parent_Category'),
+    DATATABLE_TITLE: translate('Parent_Category_list'),
+    ADD_NEW_ENTITY: translate('add_new_Parent_Category'),
+    ENTITY_NAME: translate('Parent_Category'),
   };
   const configPage = {
     entity,

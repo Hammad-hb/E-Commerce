@@ -14,6 +14,7 @@ import {
   ShopOutlined,
   FilterOutlined,
   WalletOutlined,
+  GitlabOutlined,
 } from '@ant-design/icons';
 
 const AppNav = ({ translate }) => [
@@ -76,6 +77,11 @@ const AppNav = ({ translate }) => [
     key: 'categoryproduct',
     icon: <TagsOutlined />,
     label: <Link to={'/category/product'}>{translate('product_category')}</Link>,
+  },
+  {
+    key: 'parentcategory',
+    icon: <GitlabOutlined />,
+    label: <Link to={'/parent/category'}>{translate('product_category')}</Link>,
   },
   // {
   //   key: 'employee',

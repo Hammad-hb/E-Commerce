@@ -2,11 +2,8 @@ import React from 'react';
 import { Row, Col } from 'antd';
 
 const CollapseBoxButton = ({ onChange, title }) => {
-  return (
-    <div className="collapseBoxHeader" onClick={onChange}>
-      {title}
-    </div>
-  );
+  // removed onClick={onChange} form the div below
+  return <div className="collapseBoxHeader">{title}</div>;
 };
 
 const TopCollapseBox = ({ isOpen, children }) => {

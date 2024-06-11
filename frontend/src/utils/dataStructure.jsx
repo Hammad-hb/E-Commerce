@@ -122,7 +122,6 @@ export function dataForTable({ fields, translate, moneyFormatter, dateFormat }) 
         render: (text, record) => {
           if (field.renderAsTag) {
             const selectedOption = field.options.find((x) => x.value === record[key]);
-
             return (
               <Tag bordered={false} color={selectedOption?.color}>
                 {record[key] && translate(record[key])}

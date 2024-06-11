@@ -26,6 +26,7 @@ import {
   FilterOutlined,
   WalletOutlined,
   ReconciliationOutlined,
+  GitlabOutlined,
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { selectLangDirection } from '@/redux/translate/selectors';
@@ -106,6 +107,11 @@ function Sidebar({ collapsible, isMobile = false }) {
       key: 'categoryproduct',
       icon: <TagsOutlined />,
       label: <Link to={'/category/product'}>{translate('products_category')}</Link>,
+    },
+    {
+      key: 'parentcategory',
+      icon: <GitlabOutlined />,
+      label: <Link to={'/parent/category'}>{translate('parent_category')}</Link>,
     },
     {
       key: 'expenses',
